@@ -1,5 +1,8 @@
 package org.launchcode.techjobs.console;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,12 +62,12 @@ public class TechJobs {
 
                 // What is their search term?
                 System.out.println("\nSearch term: ");
-                String searchTerm = in.nextLine();
+                String searchTerm = in.nextLine().toLowerCase();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                    printJobs(JobData.findByColumnAndValue(searchField.toLowerCase(), searchTerm));
                 }
             }
         }
@@ -111,15 +114,15 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-        if (someJobs.equals(null)) {
+        if (someJobs.size() == 0) {
             System.out.println("No jobs to display");
         }
         for (HashMap<String, String> jobs : someJobs) {
             System.out.println("*****");
-            for (Map.Entry<String, String> job : jobs.entrySet()) {
-                System.out.println(job.getKey() + ": " + job.getValue());
+            for (Map.Entry<String, String> row : jobs.entrySet()) {
+                System.out.println(row.getKey() + ": " + row.getValue());
             }
+            System.out.println("*****\n");
         }
-        System.out.println("No jobs to display");
     }
 }
